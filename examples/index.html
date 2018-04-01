@@ -104,6 +104,8 @@ var config = (function() {
   return config;
 })();
 
+config.FORCE_ENABLE_VR = true;
+
 var polyfill = new WebVRPolyfill(config);
 
 console.log("Using webvr-polyfill version " + WebVRPolyfill.version +

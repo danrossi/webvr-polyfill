@@ -81,4 +81,6 @@ export default {
   // gl.ARRAY_BUFFER_BINDING, gl.ELEMENT_ARRAY_BUFFER_BINDING,
   // and gl.TEXTURE_BINDING_2D for texture unit 0.
   DIRTY_SUBMIT_FRAME_BINDINGS: false,
+
+  FORCE_ENABLE_VR: false
 };
