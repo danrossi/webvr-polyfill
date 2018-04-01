@@ -2669,7 +2669,7 @@ ViewerSelector.prototype.createButton_ = function (label, onclick) {
 };
 var commonjsGlobal$$1 = typeof window !== 'undefined' ? window : typeof commonjsGlobal !== 'undefined' ? commonjsGlobal : typeof self !== 'undefined' ? self : {};
 function unwrapExports$$1 (x) {
-	return x && x.__esModule ? x['default'] : x;
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 }
 function createCommonjsModule$$1(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -3074,7 +3074,7 @@ VRDisplay.prototype.addFullscreenListeners_ = function (element, changeHandler, 
   this.fullscreenErrorHandler_ = errorHandler;
   if (changeHandler) {
     if (document.fullscreenEnabled) {
-      element.addEventListener('fullscreenchange', changeHandler, false);
+      document.addEventListener('fullscreenchange', changeHandler, false);
     } else if (document.webkitFullscreenEnabled) {
       element.addEventListener('webkitfullscreenchange', changeHandler, false);
     } else if (document.mozFullScreenEnabled) {
@@ -3085,7 +3085,7 @@ VRDisplay.prototype.addFullscreenListeners_ = function (element, changeHandler, 
   }
   if (errorHandler) {
     if (document.fullscreenEnabled) {
-      element.addEventListener('fullscreenerror', errorHandler, false);
+      document.addEventListener('fullscreenerror', errorHandler, false);
     } else if (document.webkitFullscreenEnabled) {
       element.addEventListener('webkitfullscreenerror', errorHandler, false);
     } else if (document.mozFullScreenEnabled) {
@@ -3100,14 +3100,14 @@ VRDisplay.prototype.removeFullscreenListeners_ = function () {
   var element = this.fullscreenEventTarget_;
   if (this.fullscreenChangeHandler_) {
     var changeHandler = this.fullscreenChangeHandler_;
-    element.removeEventListener('fullscreenchange', changeHandler, false);
+    document.removeEventListener('fullscreenchange', changeHandler, false);
     element.removeEventListener('webkitfullscreenchange', changeHandler, false);
     document.removeEventListener('mozfullscreenchange', changeHandler, false);
     element.removeEventListener('msfullscreenchange', changeHandler, false);
   }
   if (this.fullscreenErrorHandler_) {
     var errorHandler = this.fullscreenErrorHandler_;
-    element.removeEventListener('fullscreenerror', errorHandler, false);
+    document.removeEventListener('fullscreenerror', errorHandler, false);
     element.removeEventListener('webkitfullscreenerror', errorHandler, false);
     document.removeEventListener('mozfullscreenerror', errorHandler, false);
     element.removeEventListener('msfullscreenerror', errorHandler, false);
@@ -3410,7 +3410,7 @@ WebVRPolyfill.prototype.getPolyfillDisplays = function () {
   if (this._polyfillDisplaysPopulated) {
     return this.polyfillDisplays;
   }
-  if (isMobile()) {
+  if (isMobile() || this.config.FORCE_ENABLE_VR) {
     var vrDisplay = new CardboardVRDisplay({
       MOBILE_WAKE_LOCK: this.config.MOBILE_WAKE_LOCK,
       DEBUG: this.config.DEBUG,
